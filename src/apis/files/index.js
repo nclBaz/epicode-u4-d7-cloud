@@ -1,7 +1,19 @@
 import express from "express"
 import multer from "multer"
 import { extname } from "path"
+import { v2 as cloudinary } from "cloudinary"
+import { CloudinaryStorage } from "multer-storage-cloudinary"
 import { saveUsersAvatars } from "../../lib/fs-tools.js"
+
+const cloudinaryUploader = multer({
+  storage: new CloudinaryStorage({
+    cloudinary, // this searches in your process.env for something called CLOUDINARY_URL which contains your cloudinary api key and secret
+    params: {
+      folder: "jul22/books",
+    },
+  }),
+  limits: { fileSize: 1024 * 1024 },
+}).single("avatar")
 
 const filesRouter = express.Router()
 
@@ -27,6 +39,19 @@ filesRouter.post("/multiple", multer().array("avatars"), async (req, res, next) 
     const arrayOfPromises = req.files.map(file => saveUsersAvatars(file.originalname, file.buffer))
     await Promise.all(arrayOfPromises)
     res.send("UPLOADED")
+  } catch (error) {
+    next(error)
+  }
+})
+
+filesRouter.post("/cloudinary", cloudinaryUploader, async (req, res, next) => {
+  try {
+    console.log("REQ FILE: ", req.file)
+
+    // 1. upload on Cloudinary happens automatically
+    // 2. req.file contains the path which is the url where to find that picture
+    // 3. update the resource by adding the path to it
+    res.send()
   } catch (error) {
     next(error)
   }

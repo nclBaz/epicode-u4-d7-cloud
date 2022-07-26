@@ -1,1 +1,23 @@
-[{"title":"LOTR","category":"fantasy","createdAt":"2022-07-20T07:48:27.033Z","id":"3kg964l5taz0uy"},{"title":"LOTR 2","category":"fantasy","createdAt":"2022-07-20T07:48:42.800Z","id":"3kg964l5tazd0w"},{"title":"LOTR 3","category":"horror","createdAt":"2022-07-20T07:54:27.165Z","id":"3kg964l5tb6qql"},{"title":"LOTR 3","createdAt":"2022-07-20T08:44:35.611Z","id":"3kgafgl5tcz82k"},{"title":"LOTR 3","createdAt":"2022-07-20T08:44:55.187Z","id":"3kgei4l5tczn6c"},{"title":"LOTR 3","createdAt":"2022-07-20T10:46:07.333Z","id":"3kg9kwl5thbiee"},{"title":"LOTR 3","category":"fantasy","createdAt":"2022-07-20T10:51:10.142Z","id":"3kga9ol5thi01r"},{"title":"IT","category":"horror","createdAt":"2022-07-21T08:51:45.120Z","id":"3kg33ol5usoa5d"},{"title":"IT","category":"horror","createdAt":"2022-07-21T09:14:03.779Z","id":"3kg1ggl5utgz2c"}]
+[
+  {
+    "title": "LOTR",
+    "category": "fantasy",
+    "createdAt": "2022-07-20T07:48:27.033Z",
+    "id": "3kg964l5taz0uy",
+    "img": "https://res.cloudinary.com/riccardostrive/image/upload/v1658832119/jun22/books/qgnshmfifgjbzxrvhz1s.gif"
+  },
+  {
+    "title": "LOTR 2",
+    "category": "fantasy",
+    "createdAt": "2022-07-20T07:48:42.800Z",
+    "id": "3kg964l5tazd0w",
+    "img": "https://res.cloudinary.com/riccardostrive/image/upload/v1658832825/jul22/books/m4etvzpmvyxsplmwjzkh.gif"
+  },
+  { "title": "LOTR 3", "category": "horror", "createdAt": "2022-07-20T07:54:27.165Z", "id": "3kg964l5tb6qql" },
+  { "title": "LOTR 3", "createdAt": "2022-07-20T08:44:35.611Z", "id": "3kgafgl5tcz82k" },
+  { "title": "LOTR 3", "createdAt": "2022-07-20T08:44:55.187Z", "id": "3kgei4l5tczn6c" },
+  { "title": "LOTR 3", "createdAt": "2022-07-20T10:46:07.333Z", "id": "3kg9kwl5thbiee" },
+  { "title": "LOTR 3", "category": "fantasy", "createdAt": "2022-07-20T10:51:10.142Z", "id": "3kga9ol5thi01r" },
+  { "title": "IT", "category": "horror", "createdAt": "2022-07-21T08:51:45.120Z", "id": "3kg33ol5usoa5d" },
+  { "title": "IT", "category": "horror", "createdAt": "2022-07-21T09:14:03.779Z", "id": "3kg1ggl5utgz2c" }
+]
