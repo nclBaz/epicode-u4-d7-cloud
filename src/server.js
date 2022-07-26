@@ -7,6 +7,7 @@ import usersRouter from "./apis/users/index.js"
 import booksRouter from "./apis/books/index.js"
 import filesRouter from "./apis/files/index.js"
 import { badRequestHandler, notFoundHandler, unauthorizedHandler, genericServerErrorHandler } from "./errorHandlers.js"
+import createHttpError from "http-errors"
 
 const server = express()
 
@@ -15,26 +16,47 @@ const publicFolderPath = join(process.cwd(), "./public")
 
 // *************************************** MIDDLEWARES ***********************************
 
-const loggerMiddleware = (req, res, next) => {
-  console.log(`Request method: ${req.method} -- Request URL: ${req.url} -- ${new Date()}`)
-  console.log("Req body: ", req.body)
-  // const check = true
-  // if (check) {
-  //   res.status(400).send({ message: "ERRORRRRRRRRRRRRR" })
-  // } else {
-  //   next()
-  // }
-  next()
-}
+// *************************** CORS ************************
+
+// CORS - CROSS-ORIGIN RESOURCE SHARING
+
+/*
+
+CROSS-ORIGIN REQUESTS:
+
+1. FE=http://localhost:3000 and BE=http://localhost:3001 <-- 2 different port numbers they represent 2 different ORIGINS
+2. FE=https://mywonderfulfe.com and BE=https://mywonderfulbe.com <-- 2 different domains they represent 2 different ORIGINS
+3. FE=https://domain.com and BE=http://domain.com <-- 2 different protocols they represent 2 different ORIGINS
+
+*/
+
+const whitelist = [process.env.FE_DEV_URL, process.env.FE_PROD_URL]
+
+server.use(
+  cors({
+    origin: (origin, corsNext) => {
+      // If you want to connect FE to this BE you must use cors middleware
+      console.log("ORIGIN: ", origin)
+
+      if (!origin || whitelist.indexOf(origin) !== -1) {
+        // if origin is in the whitelist we can move next
+        corsNext(null, true)
+      } else {
+        // if origin is NOT in the whitelist --> trigger an error
+        corsNext(createHttpError(400, `Cors Error! Your origin ${origin} is not in the list!`))
+      }
+    },
+  })
+)
+
+// *********************************************************
 
 server.use(express.static(publicFolderPath))
-server.use(cors()) // If you want to connect FE to this BE you must use cors middleware
 server.use(express.json()) // GLOBAL MIDDLEWARE If you don't add this line BEFORE the endpoints all requests'bodies will be UNDEFINED
-server.use(loggerMiddleware) // GLOBAL MIDDLEWARE
 
 // **************************************** ENDPOINTS ************************************
 server.use("/users", usersRouter) // /users will be the prefix that all the endpoints in the usersRouter will have
-server.use("/books", loggerMiddleware, booksRouter) // ROUTER LEVEL MIDDLEWARE
+server.use("/books", booksRouter) // ROUTER LEVEL MIDDLEWARE
 server.use("/files", filesRouter)
 
 // ************************************** ERROR HANDLERS *********************************
@@ -47,6 +69,4 @@ server.use(genericServerErrorHandler)
 server.listen(port, () => {
   console.table(listEndpoints(server))
   console.log("Server is running on port: ", port)
-  console.log("DATABASE CONNECTION: ", process.env.DB_CONNECTION)
-  console.log("MY_SECRET_TOKEN: ", process.env.MY_SECRET_TOKEN)
 })
